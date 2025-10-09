@@ -2,9 +2,7 @@ import ProjectPage from '@/pages/ProjectPage'
 import React from 'react'
 
 const Project = () => {
-    return (
-        <ProjectPage />
-    )
+  return <ProjectPage />
 }
 
 export default Project
