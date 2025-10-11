@@ -11,6 +11,17 @@ const nextConfig = {
       {
         hostname: 'hoidanit.vn',
       },
+      {
+        hostname: 'upload.wikimedia.org',
+      },
+      {
+        hostname: 'tanstack.com',
+      },
+      
+       {
+        hostname: 'avatars.githubusercontent.com',
+      },
+      
     ],
   },
 }

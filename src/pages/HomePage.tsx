@@ -1,4 +1,6 @@
+import About from '@/modules/home/About'
 import Banner from '@/modules/home/Banner'
+import Contact from '@/modules/home/Contact'
 import Experience from '@/modules/home/Experience'
 import Skill from '@/modules/home/Skill'
 import React from 'react'
@@ -9,6 +11,7 @@ const HomePage = () => {
       <Banner />
       <Skill />
       <Experience />
+      <Contact />
     </div>
   )
 }

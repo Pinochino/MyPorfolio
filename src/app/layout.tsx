@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 import './globals.css'
 import Header from '@/components/common/header/Header'
 import ThemeProvider from '@/store/provider/theme-provider'
+import Footer from '@/components/common/footer/Footer'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -33,9 +34,10 @@ export default function RootLayout({
         enableSystem
         disableTransitionOnChange
       >
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased `}>
           <Header />
           <div className="h-full w-full">{children}</div>
+          <Footer />
         </body>
       </ThemeProvider>
     </html>
