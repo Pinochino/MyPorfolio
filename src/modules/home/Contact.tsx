@@ -8,7 +8,6 @@ import { Button } from '@/components/ui/button'
 import {
     Form,
     FormControl,
-    FormDescription,
     FormField,
     FormItem,
     FormLabel,
@@ -16,95 +15,133 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-
-interface UserInterface {
-    username?: string
-    email: string
-    password: string
-}
+import { useToast } from '@/hooks/use-toast'
 
 const formSchema = z.object({
-    username: z
-        .string()
-        .min(2, {
-            message: 'Username must be at least 2 characters.',
-        })
-        .optional(),
-    email: z.string().email({
-        message: 'Email is not valid format',
-    }),
+    username: z.string().min(2, { message: 'Username must be at least 2 characters.' }).optional(),
+    subject: z.string().min(2, { message: 'Username must be at least 2 characters.' }).optional(),
+    email: z.string().email({ message: 'Email is not valid format' }),
     message: z.string(),
 })
 
-z.config({
-    customError: (iss) => {
-        return 'globally modified error'
-    },
-})
-
 const Contact = () => {
-    // 1. Define your form.
+
+    const { toast } = useToast()
+
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: {
-            username: '',
-            email: '',
-            message: '',
-        },
+        defaultValues: { username: '', subject: "", email: '', message: '' },
     })
 
-    // 2. Define a submit handler.
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values)
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        console.log(values);
+
+        const res = await fetch("/api/sendMail", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(values), 
+        });
+
+        if (res.ok) {
+            toast({
+                description: "Gửi email thành công",
+            });
+            form.reset()
+        } else {
+            toast({
+                description: "Gửi email thất bại",
+            });
+        }
     }
 
-    return (
-        <div className=''>
-            <h4 className='text-center text-2xl font-bold text-emerald-800'>Contact</h4>
 
-            <div className='col-span-1 flex justify-center py-10 '>
+    return (
+        <div className="flex justify-center py-16 px-4">
+            <div className="w-full max-w-xl  shadow-lg rounded-xl border p-10">
+                <h4 className="text-center text-3xl font-bold text-emerald-700 mb-8">Contact Us</h4>
+
                 <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3 w-[30%]">
+                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        {/* USERNAME */}
                         <FormField
                             control={form.control}
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Username</FormLabel>
+                                    <FormLabel className="text-gray-700 font-medium">Username</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter your name..." autoComplete="additional-name" {...field} />
+                                        <Input
+                                            className="focus:ring-2 focus:ring-emerald-500"
+                                            placeholder="Enter your name..."
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+
                         <FormField
                             control={form.control}
                             name="email"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Email</FormLabel>
+                                    <FormLabel className="text-gray-700 font-medium">Email</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="Enter your email..." autoComplete="new-email" {...field} />
+                                        <Input
+                                            className="focus:ring-2 focus:ring-emerald-500"
+                                            placeholder="Enter your email..."
+                                            {...field}
+                                        />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+
+                        <FormField
+                            control={form.control}
+                            name="subject"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel className="text-gray-700 font-medium">Subject</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            className="focus:ring-2 focus:ring-emerald-500"
+                                            placeholder="Enter your subject..."
+                                            {...field}
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
+
+                        {/* MESSAGE */}
                         <FormField
                             control={form.control}
                             name="message"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Message</FormLabel>
-                                    <Textarea placeholder="Type your message here." {...field} />
+                                    <FormLabel className="text-gray-700 font-medium">Message</FormLabel>
+                                    <FormControl>
+                                        <Textarea
+                                            className="focus:ring-2 focus:ring-emerald-500"
+                                            placeholder="Type your message here..."
+                                            {...field}
+                                        />
+                                    </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <div className='flex  justify-center'>  <Button variant={'outline'} type="submit">Send Message</Button></div>
+
+                        {/* BUTTON */}
+                        <div className="flex justify-center pt-4">
+                            <Button type="submit" className="w-40 bg-emerald-600 hover:bg-emerald-700 text-white">
+                                Send Message
+                            </Button>
+                        </div>
                     </form>
                 </Form>
             </div>

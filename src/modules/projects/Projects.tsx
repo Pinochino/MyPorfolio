@@ -74,7 +74,7 @@ const projectData = [
 
 const Projects = () => {
   return (
-    <div className="bg-red-400 px-[5%] w-full mb-5">
+    <div className=" px-[5%] w-full mb-10 mt-20">
       <div className="text-center my-4">
         <h5 className="text-xl">My Recent Works</h5>
         <p>Here are a few projects i&#039;ve worked on recently</p>

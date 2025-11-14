@@ -5,6 +5,8 @@ import { Download, Facebook, Github, Linkedin, Mail } from 'lucide-react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
+import handleApi from '@/utils/handleApi'
+import { useToast } from '@/hooks/use-toast'
 
 const socialIcons = [
   { icon: <Facebook />, link: 'https://facebook.com' },
@@ -12,7 +14,6 @@ const socialIcons = [
   { icon: <Github />, link: 'https://github.com' },
   { icon: <Linkedin />, link: 'https://linkedin.com' },
 ]
-  
 
 const Banner = () => {
   const texts = ['Fullstack Developer', 'Freelancer']
@@ -20,9 +21,9 @@ const Banner = () => {
   const [subIndex, setSubIndex] = useState(0)
   const [deleting, setDeleting] = useState(false)
   const [blink, setBlink] = useState(true)
+  const { toast } = useToast()
 
   useEffect(() => {
-    // Nếu hết vòng thì reset
     if (index === texts.length) {
       setIndex(0)
       return
@@ -30,39 +31,61 @@ const Banner = () => {
 
     const currentText = texts[index]
 
-    const timeout = setTimeout(() => {
-      if (!deleting && subIndex < currentText.length) {
-        // Đang gõ
-        setSubIndex((prev) => prev + 1)
-      } else if (deleting && subIndex > 0) {
-        // Đang xóa
-        setSubIndex((prev) => prev - 1)
-      } else if (!deleting && subIndex === currentText.length) {
-        // Dừng một chút trước khi xóa
-        setTimeout(() => setDeleting(true), 1000)
-      } else if (deleting && subIndex === 0) {
-        // Chuyển sang text tiếp theo
-        setDeleting(false)
-        setIndex((prev) => (prev + 1) % texts.length)
-      }
-    }, deleting ? 60 : 120)
+    const timeout = setTimeout(
+      () => {
+        if (!deleting && subIndex < currentText.length) {
+          setSubIndex((prev) => prev + 1)
+        } else if (deleting && subIndex > 0) {
+          setSubIndex((prev) => prev - 1)
+        } else if (!deleting && subIndex === currentText.length) {
+          setTimeout(() => setDeleting(true), 1000)
+        } else if (deleting && subIndex === 0) {
+          setDeleting(false)
+          setIndex((prev) => (prev + 1) % texts.length)
+        }
+      },
+      deleting ? 60 : 120,
+    )
 
     return () => clearTimeout(timeout)
   }, [subIndex, deleting, index, texts])
 
-  // Hiệu ứng nháy dấu |
   useEffect(() => {
     const blinkInterval = setInterval(() => {
       setBlink((prev) => !prev)
     }, 500)
     return () => clearInterval(blinkInterval)
   }, [])
-const skills = ['Express', 'NestJS', 'Spring Boot', 'Next.js']
+  const skills = ['Express', 'NestJS', 'Spring Boot', 'Next.js']
+
+const handleDownloadFile = async () => {
+  try {
+    const res = await fetch('/api/downloadFile', {
+      method: 'GET',
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+
+    const blob = await res.blob(); // Lấy dữ liệu dạng Blob
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'TranhDinhHung_CV.pdf';
+    a.click();
+    window.URL.revokeObjectURL(url);
+
+    toast({ description: 'Download thành công!' });
+  } catch (error: any) {
+    toast({ title: 'Download thất bại', description: error.message });
+  }
+};
+
 
 
   return (
     <div className="relative mt-20 overflow-hidden py-20 px-[5%] ">
-      
       <div className="absolute -top-20 -right-20 w-96 h-96  blur-3xl rounded-full animate-pulse"></div>
 
       <div className="grid md:grid-cols-2 grid-cols-1 items-center gap-10 relative z-10">
@@ -79,15 +102,13 @@ const skills = ['Express', 'NestJS', 'Spring Boot', 'Next.js']
             <h3 className="text-2xl md:text-3xl font-semibold text-rose-600">
               I'm <span className="">Trần Đình Hùng</span>
             </h3>
-           
-            {/* 🎬 Hiệu ứng typing */}
+
             <p className="text-lg mt-3 min-h-[28px]">
-                    {`${texts[index].substring(0, subIndex)}`}
+              {`${texts[index].substring(0, subIndex)}`}
               <span className="border-r-2 border-rose-600 animate-pulse ml-1"></span>
             </p>
           </div>
 
-          {/* Social Icons */}
           <div className="flex space-x-4 my-8">
             {socialIcons.map((s, i) => (
               <motion.a
@@ -107,13 +128,13 @@ const skills = ['Express', 'NestJS', 'Spring Boot', 'Next.js']
             ))}
           </div>
 
-          {/* Buttons */}
           <div className="flex flex-wrap gap-5">
             <Button className="uppercase bg-rose-500 hover:bg-rose-600 text-white px-6 rounded-lg shadow-lg transition-all">
               My Skills 🫰
             </Button>
             <Button
               className="uppercase border border-rose-400 text-rose-600 px-6 rounded-lg flex gap-2 items-center"
+              onClick={handleDownloadFile}
             >
               Get Resume
               <Download className="w-4 h-4" />
@@ -134,7 +155,7 @@ const skills = ['Express', 'NestJS', 'Spring Boot', 'Next.js']
           </div>
 
           <pre className="px-6 py-5 text-sm font-mono  whitespace-pre-wrap">
-{`const developer = {
+            {`const developer = {
   name: "Trần Đình Hùng",
   skills: [${skills.map((s) => `"${s}"`).join(', ')}],
   hardWorker: true,
