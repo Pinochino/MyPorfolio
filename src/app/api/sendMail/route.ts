@@ -29,7 +29,6 @@ export async function POST(request: Request) {
     return new Response("Send email successfully", { status: 200 });
   } catch (reason) {
 
-    console.log(reason?.message);
 
     const message =
       reason instanceof Error ? reason.message : 'Unexpected exception'

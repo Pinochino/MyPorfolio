@@ -5,7 +5,7 @@ import ModeToggle from '@/components/ui/mode-toggle'
 import { useWindowDimension } from '@/hooks/useWindowDimension'
 import {  MenuIcon, X } from 'lucide-react'
 import Link from 'next/link'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useTheme } from 'next-themes'
 

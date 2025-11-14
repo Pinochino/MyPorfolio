@@ -14,11 +14,11 @@ const socialIcons = [
 ]
 
 const Banner = () => {
-  const texts = ['Fullstack Developer', 'Freelancer']
+  const texts = React.useMemo(() => ['Fullstack Developer', 'Freelancer'], []);
   const [index, setIndex] = useState(0)
   const [subIndex, setSubIndex] = useState(0)
   const [deleting, setDeleting] = useState(false)
-  const [blink, setBlink] = useState(true)
+  const [, setBlink] = useState(true)
   const { toast } = useToast()
 
   useEffect(() => {
@@ -75,8 +75,10 @@ const handleDownloadFile = async () => {
     window.URL.revokeObjectURL(url);
 
     toast({ description: 'Download thành công!' });
-  } catch (error: any) {
-    toast({ title: 'Download thất bại', description: error.message });
+  } catch (error) {
+    const message =
+      error instanceof Error ? error.message : 'Unexpected exception'
+    toast({ title: 'Download thất bại', description: message  });
   }
 };
 
@@ -98,7 +100,7 @@ const handleDownloadFile = async () => {
               Hi There! <span className="animate-bounce inline-block">🖐️</span>
             </h2>
             <h3 className="text-2xl md:text-3xl font-semibold text-rose-600">
-              I'm <span className="">Trần Đình Hùng</span>
+              I&apos;m <span className="">Trần Đình Hùng</span>
             </h3>
 
             <p className="text-lg mt-3 min-h-[28px]">

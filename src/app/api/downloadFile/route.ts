@@ -2,7 +2,7 @@ import fs from "fs";
 import path from "path";
 import { PDFDocument } from "pdf-lib";
 
-export async function GET(req: Request) {
+export async function GET() {
   const imagePath = path.join(process.cwd(), "public", "images", "user.jpg");
   const imageBytes = fs.readFileSync(imagePath);
 
@@ -13,7 +13,10 @@ export async function GET(req: Request) {
 
   const pdfBytes = await pdfDoc.save();
 
-  return new Response(pdfBytes, {
+  // Chuyển Uint8Array thành Buffer để Next.js Response chấp nhận
+  const buffer = Buffer.from(pdfBytes);
+
+  return new Response(buffer, {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
