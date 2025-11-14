@@ -1,4 +1,3 @@
-import About from '@/modules/home/About'
 import Banner from '@/modules/home/Banner'
 import Contact from '@/modules/home/Contact'
 import Experience from '@/modules/home/Experience'

@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import ModeToggle from '@/components/ui/mode-toggle'
 import { useWindowDimension } from '@/hooks/useWindowDimension'
-import { ChevronDown, MenuIcon, X } from 'lucide-react'
+import {  MenuIcon, X } from 'lucide-react'
 import Link from 'next/link'
 import React, { useEffect, useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -20,17 +20,14 @@ const headerRight: HeaderRightType[] = [
   { label: 'My CV', path: '/my-cv' },
 ]
 
-const languageData: string[] = ['Vietnam', 'English']
 
 const Header = () => {
   const [toggleHeader, setToggleHeader] = useState(false)
   const [shrinkHeader, setShrinkHeader] = useState(false)
-  const [languageSelected, setLanguageSelected] = useState('English')
-  const menuRef = useRef<HTMLDivElement | null>(null)
   const { scrollY } = useWindowDimension()
 
   const handleToggleHeader = () => setToggleHeader((prev) => !prev)
-  const { theme, setTheme } = useTheme()
+  const { theme } = useTheme()
 
 
   useEffect(() => {

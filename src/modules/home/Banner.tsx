@@ -2,10 +2,8 @@
 
 import { Button } from '@/components/ui/button'
 import { Download, Facebook, Github, Linkedin, Mail } from 'lucide-react'
-import Image from 'next/image'
 import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
-import handleApi from '@/utils/handleApi'
 import { useToast } from '@/hooks/use-toast'
 
 const socialIcons = [
