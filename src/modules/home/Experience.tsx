@@ -1,65 +1,50 @@
-import Image from 'next/image'
+'use client'
+
 import React from 'react'
+import { useI18n } from '@/i18n/LanguageProvider'
 
 const Experience = () => {
-  return (
-    <section className="bg-gradient-to-b  !my-20">
-      <h2 className="text-center text-2xl font-bold text-emerald-800 mb-10">
-        Experiences
-      </h2>
+  const { dictionary } = useI18n()
 
-      <div className="grid md:grid-cols-2 gap-10 px-[8%] items-center">
-        {/* LEFT - GIF IMAGE */}
-        <div className="flex justify-center items-center">
-          <div className="relative w-64 h-64 md:w-80 md:h-80 rounded-2xl overflow-hidden shadow-lg">
-            <Image
-              src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExaW90czB5d3F2OGVzMWk1bHVoc2gzMms3NTBteGoyOHhpZXhtdTFvaCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/1KllEBZdsLBwt3sDMG/giphy.gif"
-              alt="Experience GIF"
-              fill
-              className="object-cover"
-            />
+  return (
+    <section id="experience" className="px-[5%] py-16">
+      <div className="mb-8 text-center">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">{dictionary.experience.title}</h2>
+        <p className="mt-2 text-slate-600 dark:text-slate-300">{dictionary.experience.subtitle}</p>
+      </div>
+
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="surface-3d rounded-2xl border border-slate-200 bg-white/95 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950/95">
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">{dictionary.experience.workTitle}</h3>
+          <div className="mt-5 space-y-5">
+            {dictionary.experience.work.map((item) => (
+              <article key={`${item.period}-${item.title}`} className="border-l-2 border-blue-700 pl-4 transition duration-300 hover:translate-x-1 dark:border-blue-400">
+                <p className="text-xs font-semibold uppercase tracking-wider text-blue-700 dark:text-blue-400">
+                  {item.period}
+                </p>
+                <h4 className="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{item.title}</h4>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{item.organization}</p>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
+              </article>
+            ))}
           </div>
         </div>
 
-        <div className="space-y-8 flex flex-wrap justify-center items-center">
-          <div className="bg-white border  rounded-2xl shadow-md p-6 hover:shadow-lg transition-all w-[70%]">
-            <h5 className="text-center text-emerald-600 font-semibold mb-4">
-              Jan 2024 - Present
-            </h5>
-            <div className="flex items-center gap-4">
-              <Image
-                src="https://e7.pngegg.com/pngimages/210/147/png-clipart-computer-icons-study-skills-study-miscellaneous-angle-thumbnail.png"
-                alt="Work Icon"
-                width={40}
-                height={40}
-              />
-              <div>
-                <h4 className="uppercase font-bold text-emerald-800">
-                  Fullstack Developer
-                </h4>
-                <p className="text-gray-600 text-sm">Developing web applications using Next.js and Node.js</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white border  rounded-2xl shadow-md p-6 hover:shadow-lg transition-all w-[70%]">
-            <h5 className="text-center text-emerald-600 font-semibold mb-4">
-              May 2023 - Dec 2023
-            </h5>
-            <div className="flex items-center gap-4">
-              <Image
-                src="https://e7.pngegg.com/pngimages/210/147/png-clipart-computer-icons-study-skills-study-miscellaneous-angle-thumbnail.png"
-                alt="Work Icon"
-                width={40}
-                height={40}
-              />
-              <div>
-                <h4 className="uppercase font-bold text-emerald-800">
-                  Frontend Developer
-                </h4>
-                <p className="text-gray-600 text-sm">Worked with React, TailwindCSS, and TypeScript</p>
-              </div>
-            </div>
+        <div className="surface-3d rounded-2xl border border-slate-200 bg-white/95 p-6 shadow-sm dark:border-slate-800 dark:bg-slate-950/95">
+          <h3 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+            {dictionary.experience.educationTitle}
+          </h3>
+          <div className="mt-5 space-y-5">
+            {dictionary.experience.education.map((item) => (
+              <article key={`${item.period}-${item.title}`} className="border-l-2 border-teal-700 pl-4 transition duration-300 hover:translate-x-1 dark:border-teal-400">
+                <p className="text-xs font-semibold uppercase tracking-wider text-teal-700 dark:text-teal-400">
+                  {item.period}
+                </p>
+                <h4 className="mt-1 text-base font-semibold text-slate-900 dark:text-slate-100">{item.title}</h4>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400">{item.organization}</p>
+                <p className="mt-1 text-sm text-slate-600 dark:text-slate-300">{item.description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </div>

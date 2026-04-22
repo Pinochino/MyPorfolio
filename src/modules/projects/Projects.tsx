@@ -1,136 +1,83 @@
 'use client'
 import React from 'react'
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import Image from 'next/image'
 import { Button } from '@/components/ui/button'
-import { Github, SquareMenu } from 'lucide-react'
+import { ExternalLink, Github } from 'lucide-react'
 import { motion } from 'framer-motion'
-
-const projectData = [
-  {
-    title: 'React Native E-Commerce App',
-    description:
-      'A modern e-commerce mobile app built with React Native, Redux Toolkit, and Firebase. Includes authentication, cart, and product search features.',
-    image:
-      'https://hoidanit.vn/_next/image?url=https%3A%2F%2Fhoidanit.vn%2Fimages%2F2610799786e82f64a8aea3b0ecd23b55c.png&w=1920&q=75',
-    github: 'https://github.com/',
-    live: 'https://your-demo-link.com',
-  },
-
-    {
-    title: 'React Native E-Commerce App',
-    description:
-      'A modern e-commerce mobile app built with React Native, Redux Toolkit, and Firebase. Includes authentication, cart, and product search features.',
-    image:
-      'https://hoidanit.vn/_next/image?url=https%3A%2F%2Fhoidanit.vn%2Fimages%2F2610799786e82f64a8aea3b0ecd23b55c.png&w=1920&q=75',
-    github: 'https://github.com/',
-    live: 'https://your-demo-link.com',
-  },
-
-    {
-    title: 'React Native E-Commerce App',
-    description:
-      'A modern e-commerce mobile app built with React Native, Redux Toolkit, and Firebase. Includes authentication, cart, and product search features.',
-    image:
-      'https://hoidanit.vn/_next/image?url=https%3A%2F%2Fhoidanit.vn%2Fimages%2F2610799786e82f64a8aea3b0ecd23b55c.png&w=1920&q=75',
-    github: 'https://github.com/',
-    live: 'https://your-demo-link.com',
-  },
-    {
-    title: 'React Native E-Commerce App',
-    description:
-      'A modern e-commerce mobile app built with React Native, Redux Toolkit, and Firebase. Includes authentication, cart, and product search features.',
-    image:
-      'https://hoidanit.vn/_next/image?url=https%3A%2F%2Fhoidanit.vn%2Fimages%2F2610799786e82f64a8aea3b0ecd23b55c.png&w=1920&q=75',
-    github: 'https://github.com/',
-    live: 'https://your-demo-link.com',
-  },
-    {
-    title: 'React Native E-Commerce App',
-    description:
-      'A modern e-commerce mobile app built with React Native, Redux Toolkit, and Firebase. Includes authentication, cart, and product search features.',
-    image:
-      'https://hoidanit.vn/_next/image?url=https%3A%2F%2Fhoidanit.vn%2Fimages%2F2610799786e82f64a8aea3b0ecd23b55c.png&w=1920&q=75',
-    github: 'https://github.com/',
-    live: 'https://your-demo-link.com',
-  },
-    {
-    title: 'React Native E-Commerce App',
-    description:
-      'A modern e-commerce mobile app built with React Native, Redux Toolkit, and Firebase. Includes authentication, cart, and product search features.',
-    image:
-      'https://hoidanit.vn/_next/image?url=https%3A%2F%2Fhoidanit.vn%2Fimages%2F2610799786e82f64a8aea3b0ecd23b55c.png&w=1920&q=75',
-    github: 'https://github.com/',
-    live: 'https://your-demo-link.com',
-  },
-]
+import { useI18n } from '@/i18n/LanguageProvider'
 
 const Projects = () => {
+  const { dictionary } = useI18n()
+
   return (
-    <div className=" px-[5%] w-full mb-10 mt-20">
-      <div className="text-center my-4">
-        <h5 className="text-xl">My Recent Works</h5>
-        <p>Here are a few projects i&#039;ve worked on recently</p>
+    <section id="projects" className="px-[5%] py-16">
+      <div className="mb-8 text-center">
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">{dictionary.projects.title}</h2>
+        <p className="mt-2 text-slate-600 dark:text-slate-300">{dictionary.projects.subtitle}</p>
       </div>
-      <div className="grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1 gap-5  justify-items-center">
-        {Array.from(projectData).map((project, index: number) => (
+
+      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+        {dictionary.projects.items.map((project, index) => (
           <motion.div
-            key={index}
+            key={project.name}
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: index * 0.1 }}
             viewport={{ once: true }}
-            className="w-full flex justify-center"
+            className="h-full"
           >
-            <Card className="w-[90%] overflow-hidden border border-gray-200 dark:border-gray-700 shadow-md hover:shadow-xl transition-all duration-300 rounded-2xl bg-white dark:bg-gray-800">
+            <Card className="surface-3d h-full overflow-hidden rounded-2xl border border-slate-200 bg-white/95 shadow-sm dark:border-slate-800 dark:bg-slate-950/95">
               <CardHeader className="relative p-0 overflow-hidden group">
                 <Image
                   src={project.image}
-                  alt={project.title}
+                  alt={project.name}
                   width={600}
                   height={400}
-                  className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="h-52 w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500 flex justify-center items-center gap-4">
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="bg-white/20 text-white border-white hover:bg-white hover:text-black"
-                  >
-                    <Github className="mr-1 h-4 w-4" />
-                    Github
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="secondary"
-                    className="bg-white/20 text-white border-white hover:bg-white hover:text-black"
-                  >
-                    <SquareMenu className="mr-1 h-4 w-4" />
-                    Live Demo
-                  </Button>
+                <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 via-black/10 to-transparent p-4 opacity-0 transition-all duration-500 group-hover:opacity-100">
+                  <div className="flex gap-2">
+                    <Button asChild size="sm" variant="secondary">
+                      <a href={project.github} target="_blank" rel="noreferrer">
+                        <Github className="mr-1 h-4 w-4" />
+                        {dictionary.projects.github}
+                      </a>
+                    </Button>
+                    <Button asChild size="sm" className="bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-100 dark:text-slate-900 dark:hover:bg-slate-200">
+                      <a href={project.liveDemo} target="_blank" rel="noreferrer">
+                        <ExternalLink className="mr-1 h-4 w-4" />
+                        {dictionary.projects.liveDemo}
+                      </a>
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="p-5">
-                <h5 className="font-semibold text-lg mb-2 text-gray-800 dark:text-gray-100">
-                  {project.title}
-                </h5>
-                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
-                  {project.description}
+                <h3 className="mb-2 text-lg font-semibold text-slate-900 dark:text-slate-100">{project.name}</h3>
+                <p className="text-sm text-slate-600 dark:text-slate-300">{project.summary}</p>
+
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="rounded-full border border-slate-300 px-2 py-1 text-xs text-slate-700 transition duration-300 hover:border-blue-700 hover:text-blue-800 dark:border-slate-700 dark:text-slate-300 dark:hover:border-blue-400 dark:hover:text-blue-300"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <p className="mt-4 text-sm text-slate-700 dark:text-slate-200">
+                  <span className="font-semibold">{dictionary.projects.role}: </span>
+                  {project.role}
                 </p>
               </CardContent>
-              <CardFooter className="flex justify-center py-4">
-                <div className="w-16 h-[3px] bg-gradient-to-r from-rose-400 to-pink-500 rounded-full" />
-              </CardFooter>
             </Card>
           </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   )
 }
 

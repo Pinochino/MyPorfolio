@@ -1,8 +1,8 @@
-import ProjectPage from '@/pages/ProjectPage'
+import ProjectsView from '@/views/ProjectsView'
 import React from 'react'
 
 const Project = () => {
-  return <ProjectPage />
+  return <ProjectsView />
 }
 
 export default Project

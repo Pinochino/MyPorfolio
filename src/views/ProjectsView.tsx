@@ -1,8 +1,8 @@
 import Projects from '@/modules/projects/Projects'
 import React from 'react'
 
-const ProjectPage = () => {
+const ProjectsView = () => {
   return <Projects />
 }
 
-export default ProjectPage
+export default ProjectsView

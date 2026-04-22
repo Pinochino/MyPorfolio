@@ -4,6 +4,11 @@ import { PDFDocument } from "pdf-lib";
 
 export async function GET() {
   const imagePath = path.join(process.cwd(), "public", "images", "user.jpg");
+
+  if (!fs.existsSync(imagePath)) {
+    return Response.json({ message: "CV source file not found." }, { status: 404 });
+  }
+
   const imageBytes = fs.readFileSync(imagePath);
 
   const pdfDoc = await PDFDocument.create();
@@ -13,14 +18,13 @@ export async function GET() {
 
   const pdfBytes = await pdfDoc.save();
 
-  // Chuyển Uint8Array thành Buffer để Next.js Response chấp nhận
   const buffer = Buffer.from(pdfBytes);
 
   return new Response(buffer, {
     status: 200,
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": `attachment; filename="portfolio.pdf"`,
+      "Content-Disposition": `attachment; filename="TranDinhHung_CV.pdf"`,
     },
   });
 }

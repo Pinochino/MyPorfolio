@@ -16,136 +16,131 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { useToast } from '@/hooks/use-toast'
-
-const formSchema = z.object({
-    username: z.string().min(2, { message: 'Username must be at least 2 characters.' }).optional(),
-    subject: z.string().min(2, { message: 'Username must be at least 2 characters.' }).optional(),
-    email: z.string().email({ message: 'Email is not valid format' }),
-    message: z.string(),
-})
+import { useI18n } from '@/i18n/LanguageProvider'
+import { Github, Linkedin, Mail } from 'lucide-react'
 
 const Contact = () => {
-
+    const { dictionary } = useI18n()
     const { toast } = useToast()
+
+    const formSchema = z.object({
+        username: z.string().min(2, { message: dictionary.contact.form.validation.fullName }),
+        subject: z.string().min(3, { message: dictionary.contact.form.validation.subject }),
+        email: z.string().email({ message: dictionary.contact.form.validation.email }),
+        message: z.string().min(10, { message: dictionary.contact.form.validation.message }),
+    })
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
-        defaultValues: { username: '', subject: "", email: '', message: '' },
+        defaultValues: { username: '', subject: '', email: '', message: '' },
     })
 
-    async function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values);
+    const isSubmitting = form.formState.isSubmitting
 
-        const res = await fetch("/api/sendMail", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(values), 
-        });
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const res = await fetch('/api/sendMail', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(values),
+        })
 
         if (res.ok) {
-            toast({
-                description: "Gửi email thành công",
-            });
+            toast({ description: dictionary.contact.form.success })
             form.reset()
-        } else {
-            toast({
-                description: "Gửi email thất bại",
-            });
+            return
         }
+
+        const payload = (await res.json().catch(() => null)) as { message?: string } | null
+        toast({ description: payload?.message ?? dictionary.contact.form.failed })
     }
 
-
     return (
-        <div className="flex justify-center py-16 px-4">
-            <div className="w-full max-w-xl  shadow-lg rounded-xl border p-10">
-                <h4 className="text-center text-3xl font-bold text-emerald-700 mb-8">Contact Us</h4>
+        <section id="contact" className="px-[5%] py-16">
+            <div className="grid gap-6 md:grid-cols-[0.9fr_1.1fr]">
+                <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                    <h2 className="text-3xl font-bold text-slate-900 dark:text-slate-100">{dictionary.contact.title}</h2>
+                    <p className="mt-2 text-slate-600 dark:text-slate-300">{dictionary.contact.subtitle}</p>
 
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                        {/* USERNAME */}
-                        <FormField
-                            control={form.control}
-                            name="username"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 font-medium">Username</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className="focus:ring-2 focus:ring-emerald-500"
-                                            placeholder="Enter your name..."
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                    <div className="mt-6 space-y-4 text-sm text-slate-700 dark:text-slate-200">
+                        <a href="mailto:example@gmail.com" className="flex items-center gap-2 hover:text-amber-600">
+                            <Mail className="h-4 w-4" /> example@gmail.com
+                        </a>
+                        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-600">
+                            <Linkedin className="h-4 w-4" /> linkedin.com/in/trandinhhung
+                        </a>
+                        <a href="https://github.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-600">
+                            <Github className="h-4 w-4" /> github.com/trandinhhung
+                        </a>
+                    </div>
+                </div>
 
-                        <FormField
-                            control={form.control}
-                            name="email"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 font-medium">Email</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className="focus:ring-2 focus:ring-emerald-500"
-                                            placeholder="Enter your email..."
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm dark:border-slate-800 dark:bg-slate-950">
+                    <Form {...form}>
+                        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                            <FormField
+                                control={form.control}
+                                name="username"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>{dictionary.contact.form.fullName}</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder={dictionary.contact.form.fullName} {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                        <FormField
-                            control={form.control}
-                            name="subject"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 font-medium">Subject</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            className="focus:ring-2 focus:ring-emerald-500"
-                                            placeholder="Enter your subject..."
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                            <FormField
+                                control={form.control}
+                                name="email"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>{dictionary.contact.form.email}</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="example@mail.com" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                        {/* MESSAGE */}
-                        <FormField
-                            control={form.control}
-                            name="message"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel className="text-gray-700 font-medium">Message</FormLabel>
-                                    <FormControl>
-                                        <Textarea
-                                            className="focus:ring-2 focus:ring-emerald-500"
-                                            placeholder="Type your message here..."
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                            <FormField
+                                control={form.control}
+                                name="subject"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>{dictionary.contact.form.subject}</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder={dictionary.contact.form.subject} {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                        {/* BUTTON */}
-                        <div className="flex justify-center pt-4">
-                            <Button type="submit" className="w-40 bg-emerald-600 hover:bg-emerald-700 text-white">
-                                Send Message
+                            <FormField
+                                control={form.control}
+                                name="message"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>{dictionary.contact.form.message}</FormLabel>
+                                        <FormControl>
+                                            <Textarea rows={5} placeholder={dictionary.contact.form.message} {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <Button type="submit" disabled={isSubmitting} className="w-full bg-sky-700 text-white hover:bg-sky-800">
+                                {isSubmitting ? dictionary.contact.form.sending : dictionary.contact.form.submit}
                             </Button>
-                        </div>
-                    </form>
-                </Form>
+                        </form>
+                    </Form>
+                </div>
             </div>
-        </div>
+        </section>
     )
 }
 
