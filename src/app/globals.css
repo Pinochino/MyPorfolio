@@ -8,6 +8,20 @@
     text-wrap: balance;
   }
 
+  .animated-gradient {
+    background-size: 240% 240%;
+    animation: gradientShift 16s ease-in-out infinite;
+  }
+
+  .float-slow {
+    animation: floatSlow 8s ease-in-out infinite;
+  }
+
+  .terminal-scanlines {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 50%, transparent 50%);
+    background-size: 100% 4px;
+  }
+
   .surface-3d {
     transform-style: preserve-3d;
     transition:
@@ -35,6 +49,28 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0) scale(1.02);
   }
 }
 
