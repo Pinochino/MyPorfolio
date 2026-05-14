@@ -62,14 +62,14 @@ const Contact = () => {
                     <p className="mt-2 text-slate-600 dark:text-slate-300">{dictionary.contact.subtitle}</p>
 
                     <div className="mt-6 space-y-4 text-sm text-slate-700 dark:text-slate-200">
-                        <a href="mailto:example@gmail.com" className="flex items-center gap-2 hover:text-amber-600">
-                            <Mail className="h-4 w-4" /> example@gmail.com
+                        <a href="mailto:Tranhunghp22112004@gmail.com" className="flex items-center gap-2 hover:text-amber-600">
+                            <Mail className="h-4 w-4" /> Tranhunghp22112004@gmail.com
                         </a>
-                        <a href="https://linkedin.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-600">
-                            <Linkedin className="h-4 w-4" /> linkedin.com/in/trandinhhung
+                        <a href="https://www.linkedin.com/in/pinochino/" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-600">
+                            <Linkedin className="h-4 w-4" /> linkedin.com/in/pinochino
                         </a>
-                        <a href="https://github.com" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-600">
-                            <Github className="h-4 w-4" /> github.com/trandinhhung
+                        <a href="https://github.com/Pinochino" target="_blank" rel="noreferrer" className="flex items-center gap-2 hover:text-amber-600">
+                            <Github className="h-4 w-4" /> github.com/Pinochino
                         </a>
                     </div>
                 </div>

@@ -190,29 +190,29 @@ const enDictionary: PortfolioDictionary = {
         name: 'CommerceHub Platform',
         summary:
           'A fullstack e-commerce platform with role-based access, payment flow, and analytics dashboard.',
-        technologies: ['Next.js', 'TypeScript', 'Node.js', 'PostgreSQL'],
+        technologies: ['Spring Boot', 'TypeScript', 'React', 'PostgreSQL'],
         image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1200&auto=format&fit=crop',
-        github: 'https://github.com/',
+        github: 'https://github.com/Pinochino/SpringBoot-React.git',
         liveDemo: 'https://example.com',
         role: 'Designed architecture, built backend APIs, and implemented frontend UI.',
       },
       {
-        name: 'RecruitFlow ATS',
+        name: 'Task Managment',
         summary:
-          'A recruitment workflow system for managing candidates, interview pipelines, and reports.',
+          'A recruitment workflow system for managing task, and reports.',
         technologies: ['React', 'NestJS', 'MongoDB', 'Docker'],
         image: 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=1200&auto=format&fit=crop',
-        github: 'https://github.com/',
+        github: 'https://github.com/Pinochino/Kanban.git',
         liveDemo: 'https://example.com',
         role: 'Implemented candidate workflow modules and notification integrations.',
       },
       {
-        name: 'EduTrack LMS',
+        name: 'Ecommerce Website',
         summary:
           'Learning management app with course tracking, assignment submission, and mentor dashboard.',
-        technologies: ['Next.js', 'Prisma', 'MySQL', 'TailwindCSS'],
+        technologies: ['React', 'Express.js', 'MySQL', 'TailwindCSS'],
         image: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?q=80&w=1200&auto=format&fit=crop',
-        github: 'https://github.com/',
+        github: 'https://github.com/Pinochino/IWS_Final.git',
         liveDemo: 'https://example.com',
         role: 'Built student dashboard, API contracts, and data modeling.',
       },
@@ -229,14 +229,14 @@ const enDictionary: PortfolioDictionary = {
         title: 'Fullstack Developer',
         organization: 'Freelance / Product Teams',
         description:
-          'Delivered web applications using Next.js and Node.js with focus on performance, reliability, and maintainability.',
+          'Delivered web applications using Spring Boot and React with focus on performance, reliability, and maintainability.',
       },
       {
-        period: '2023 - 2024',
-        title: 'Frontend Developer',
+        period: '2022 - 2024',
+        title: 'Backend Developer',
         organization: 'Project-based Collaboration',
         description:
-          'Developed responsive interfaces, optimized UX flows, and collaborated closely with backend developers.',
+          'Learn Java Core, Database and how to create the responsive website',
       },
     ],
     education: [
